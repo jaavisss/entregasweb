@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+<style>
+    body{
+        margin: 0px
+    }
+
+.contenedor{
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 20px;
+    
+}
+.contenido{
+    background-color: hotpink;
+    border-radius: 15px;
+    filter: grayscale(100%);
+}
+
+
+.contenido:hover{
+    filter: none;
+}
+
+#primero{
+    grid-column: 1/2;
+    grid-row: 1/3;
+}
+
+#ultimo{
+    grid-column: 3/4;
+    grid-row: 2/4;
+}
+
+img{
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+</style>
+</head>
+<body>
+    <div class="contenedor">
+        <div class="contenido" id="primero"> <img src="1.jpg"></div>
+        <div class="contenido"> <img src="Barbie ♡.jpg"></div>
+        <div class="contenido"> <img src="descarga - 2025-09-10T172247.519.jpg"></div>
+        <div class="contenido"> <img src="2.jpg"></div>
+        <div class="contenido" ><img src="4.jpg"></div>
+        <div class="contenido"> <img src="5.jpg"></div>
+        <div class="contenido" id="ultimo"><img src="descarga - 2025-09-10T172300.968.jpg"></div>
+    </div>
+
+</body>
+</html>
