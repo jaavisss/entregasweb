@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Estela</title>
+  <style>
+    html,body{height:100%;margin:0;background:#071021;color:#fff;font-family:Arial,Helvetica,sans-serif}
+    canvas{display:block;width:100vw;height:100vh}
+    .hint{position:fixed;left:12px;top:10px;background:rgba(255,255,255,0.06);padding:6px 10px;border-radius:6px;font-size:13px}
+  </style>
+</head>
+<body>
+  <div class="hint">Mueve el cursor para ver la estela. Haz clic para más partículas.</div>
+  <canvas id="c"></canvas>
+  <script>
+
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+    addEventListener('resize', resize);
+    resize();
+
+    const particles = [];
+
+    function spawn(x,y, count=1){
+      for(let i=0;i<count;i++){
+        particles.push({
+          x: x + (Math.random()-0.5)*8,
+          y: y + (Math.random()-0.5)*8,
+          vx: (Math.random()-0.5)*2,
+          vy: (Math.random()-0.5)*2,
+          life: 1,
+          size: 3 + Math.random()*6
+        });
+      }
+    }
+
+
+    let mx = canvas.width/2, my = canvas.height/2;
+    addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; spawn(mx,my); });
+    addEventListener('pointerdown', e => { spawn(e.clientX, e.clientY, 12); });
+
+    function loop(){
+
+      ctx.fillStyle = 'rgba(7,16,33,0.18)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+
+      if(Math.random() < 0.6) spawn(mx + (Math.random()-0.5)*6, my + (Math.random()-0.5)*6);
+
+      for(let i = particles.length-1; i >= 0; i--){
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life -= 0.02;
+        const a = Math.max(p.life, 0);
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(180,220,255,${a})`;
+        ctx.arc(p.x, p.y, p.size * a, 0, Math.PI*2);
+        ctx.fill();
+        if(p.life <= 0) particles.splice(i, 1);
+      }
+
+      requestAnimationFrame(loop);
+    }
+
+
+    ctx.fillStyle = '#040514';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    loop();
+  </script>
+</body>
+</html>
